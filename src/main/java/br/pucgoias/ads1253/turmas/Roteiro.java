@@ -2,6 +2,9 @@ package br.pucgoias.ads1253.turmas;
 
 import br.pucgoias.ads1253.turmas.apoio.CargaInicial;
 import br.pucgoias.ads1253.turmas.apoio.MedidorSql;
+import br.pucgoias.ads1253.turmas.escrita.InscreverEstudante;
+import br.pucgoias.ads1253.turmas.escrita.TurmaComandos;
+import br.pucgoias.ads1253.turmas.leitura.TurmaConsultas;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -16,11 +19,13 @@ import java.util.UUID;
 public class Roteiro implements CommandLineRunner {
 
     private final CargaInicial carga;
-    private final TurmaService servico;
+    private final TurmaComandos comandos;
+    private final TurmaConsultas consultas;
 
-    public Roteiro(CargaInicial carga, TurmaService servico) {
+    public Roteiro(CargaInicial carga, TurmaComandos comandos, TurmaConsultas consultas) {
         this.carga = carga;
-        this.servico = servico;
+        this.comandos = comandos;
+        this.consultas = consultas;
     }
 
     @Override
@@ -29,7 +34,7 @@ public class Roteiro implements CommandLineRunner {
         System.out.println();
         System.out.println("Carga concluída: " + CargaInicial.TURMAS + " turmas.");
 
-        medir("Painel de ocupação", () -> imprimir(servico.painel()));
+        medir("Painel pelo agregado", () -> imprimir(consultas.painelPeloAgregado()));
     }
 
     /** Executa a ação informada e apresenta quantos comandos SQL foram enviados ao banco. */

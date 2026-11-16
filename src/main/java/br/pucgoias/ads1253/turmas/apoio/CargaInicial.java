@@ -1,6 +1,8 @@
 package br.pucgoias.ads1253.turmas.apoio;
 
-import br.pucgoias.ads1253.turmas.TurmaService;
+import br.pucgoias.ads1253.turmas.escrita.AbrirTurma;
+import br.pucgoias.ads1253.turmas.escrita.InscreverEstudante;
+import br.pucgoias.ads1253.turmas.escrita.TurmaComandos;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -14,19 +16,19 @@ public class CargaInicial {
 
     public static final int TURMAS = 100;
 
-    private final TurmaService servico;
+    private final TurmaComandos comandos;
 
-    public CargaInicial(TurmaService servico) {
-        this.servico = servico;
+    public CargaInicial(TurmaComandos comandos) {
+        this.comandos = comandos;
     }
 
     /** @return identificador da primeira turma criada (Turma 001) */
     public UUID executar() {
         UUID primeira = null;
         for (int i = 1; i <= TURMAS; i++) {
-            UUID turma = servico.abrir(String.format("Turma %03d", i), 30);
+            UUID turma = comandos.abrir(new AbrirTurma(String.format("Turma %03d", i), 30));
             for (int j = 1; j <= i % 21; j++) {
-                servico.inscrever(turma, "estudante" + j + "@pucgoias.edu.br");
+                comandos.inscrever(new InscreverEstudante(turma, "estudante" + j + "@pucgoias.edu.br"));
             }
             if (primeira == null) {
                 primeira = turma;

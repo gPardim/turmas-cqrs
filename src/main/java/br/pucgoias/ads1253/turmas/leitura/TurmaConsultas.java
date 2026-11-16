@@ -12,9 +12,11 @@ import java.util.List;
 public class TurmaConsultas {
 
     private final TurmaRepository turmas;
+    private final TurmaLeituraRepository leitura;
 
-    public TurmaConsultas(TurmaRepository turmas) {
+    public TurmaConsultas(TurmaRepository turmas, TurmaLeituraRepository leitura) {
         this.turmas = turmas;
+        this.leitura = leitura;
     }
 
     public List<LinhaPainel> painelPeloAgregado() {
@@ -22,5 +24,9 @@ public class TurmaConsultas {
                 .map(t -> new LinhaPainel(t.getNome(), t.getCapacidade(), t.getInscritos().size(),
                         t.getCapacidade() - t.getInscritos().size()))
                 .toList();
+    }
+
+    public List<ResumoTurma> resumos() {
+        return leitura.resumos();
     }
 }

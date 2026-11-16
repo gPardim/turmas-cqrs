@@ -35,6 +35,7 @@ public class Roteiro implements CommandLineRunner {
         System.out.println("Carga concluída: " + CargaInicial.TURMAS + " turmas.");
 
         medir("Painel pelo agregado", () -> imprimir(consultas.painelPeloAgregado()));
+        medir("Resumo das turmas (projeção)", () -> imprimir(consultas.resumos()));
     }
 
     /** Executa a ação informada e apresenta quantos comandos SQL foram enviados ao banco. */

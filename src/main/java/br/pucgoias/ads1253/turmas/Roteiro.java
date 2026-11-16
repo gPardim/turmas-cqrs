@@ -37,6 +37,7 @@ public class Roteiro implements CommandLineRunner {
         medir("Painel calculado a cada consulta (projeção com junção)",
                 () -> imprimir(consultas.painelCalculado()));
         medir("Resumo das turmas (projeção)", () -> imprimir(consultas.resumos()));
+        medir("Painel lido da tabela de leitura", () -> imprimir(consultas.painel()));
     }
 
     /** Executa a ação informada e apresenta quantos comandos SQL foram enviados ao banco. */

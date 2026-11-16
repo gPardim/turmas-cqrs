@@ -34,7 +34,8 @@ public class Roteiro implements CommandLineRunner {
         System.out.println();
         System.out.println("Carga concluída: " + CargaInicial.TURMAS + " turmas.");
 
-        medir("Painel pelo agregado", () -> imprimir(consultas.painelPeloAgregado()));
+        medir("Painel calculado a cada consulta (projeção com junção)",
+                () -> imprimir(consultas.painelCalculado()));
         medir("Resumo das turmas (projeção)", () -> imprimir(consultas.resumos()));
     }
 

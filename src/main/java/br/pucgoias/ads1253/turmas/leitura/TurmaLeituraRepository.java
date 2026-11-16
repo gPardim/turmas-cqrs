@@ -16,4 +16,13 @@ public interface TurmaLeituraRepository extends Repository<Turma, UUID> {
             order by t.nome
             """)
     List<ResumoTurma> resumos();
+
+    @Query("""
+            select new br.pucgoias.ads1253.turmas.leitura.OcupacaoTurma(
+                t.id, t.nome, t.capacidade, count(i))
+            from Turma t left join t.inscritos i
+            group by t.id, t.nome, t.capacidade
+            order by t.nome
+            """)
+    List<OcupacaoTurma> ocupacaoCalculada();
 }

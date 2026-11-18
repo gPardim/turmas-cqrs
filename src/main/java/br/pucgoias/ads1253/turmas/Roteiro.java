@@ -4,6 +4,7 @@ import br.pucgoias.ads1253.turmas.apoio.CargaInicial;
 import br.pucgoias.ads1253.turmas.apoio.MedidorSql;
 import br.pucgoias.ads1253.turmas.escrita.InscreverEstudante;
 import br.pucgoias.ads1253.turmas.escrita.TurmaComandos;
+import br.pucgoias.ads1253.turmas.leitura.ReconstrutorPainel;
 import br.pucgoias.ads1253.turmas.leitura.TurmaConsultas;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -21,11 +22,14 @@ public class Roteiro implements CommandLineRunner {
     private final CargaInicial carga;
     private final TurmaComandos comandos;
     private final TurmaConsultas consultas;
+    private final ReconstrutorPainel reconstrutor;
 
-    public Roteiro(CargaInicial carga, TurmaComandos comandos, TurmaConsultas consultas) {
+    public Roteiro(CargaInicial carga, TurmaComandos comandos, TurmaConsultas consultas,
+                   ReconstrutorPainel reconstrutor) {
         this.carga = carga;
         this.comandos = comandos;
         this.consultas = consultas;
+        this.reconstrutor = reconstrutor;
     }
 
     @Override
@@ -42,6 +46,10 @@ public class Roteiro implements CommandLineRunner {
         medir("Comando: nova inscrição na Turma 001",
                 () -> comandos.inscrever(new InscreverEstudante(primeiraTurma, "novo@pucgoias.edu.br")));
         medir("Painel após o comando", () -> imprimir(consultas.painel()));
+
+        medir("Reconstrução da tabela de leitura",
+                () -> System.out.println("   Linhas recriadas: " + reconstrutor.reconstruir()));
+        medir("Painel após a reconstrução", () -> imprimir(consultas.painel()));
     }
 
     /** Executa a ação informada e apresenta quantos comandos SQL foram enviados ao banco. */

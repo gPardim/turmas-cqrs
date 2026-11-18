@@ -1,5 +1,7 @@
 package br.pucgoias.ads1253.turmas.leitura;
 
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 
 import java.util.List;
@@ -13,4 +15,9 @@ public interface PainelTurmaRepository extends Repository<PainelTurma, UUID> {
     Optional<PainelTurma> findById(UUID turmaId);
 
     List<PainelTurma> findAllByOrderByNomeAsc();
+
+    /** Remove todas as linhas com um único comando SQL. */
+    @Modifying
+    @Query("delete from PainelTurma")
+    void apagarTudo();
 }
